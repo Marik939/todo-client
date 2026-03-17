@@ -1,0 +1,4 @@
+js/server/
+node_modules/
+.env
+.env.vault
