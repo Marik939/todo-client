@@ -9,12 +9,37 @@ const input = document.querySelector('input')
 
 // Рендер одной задачи
 const renderTask = (task) => {
-  const li = document.createElement('li')
-  li.setAttribute('class', 'list-group-item')
-  li.innerHTML = task.getText()
-  list.append(li)
+    const li = document.createElement('li')
+    li.setAttribute('class', 'list-group-item')
+    li.setAttribute('data-key', task.getId().toString())   // важно для удаления
+
+    renderSpan(li, task.getText())
+    renderLink(li, task.getId())
+
+    list.append(li)
 }
 
+const renderSpan = (li, text) => {
+    const span = li.appendChild(document.createElement('span'))
+    span.innerHTML = text
+}
+
+const renderLink = (li, id) => {
+    const a = li.appendChild(document.createElement('a'))
+    a.innerHTML = '<i class="bi bi-trash"></i>'
+    a.setAttribute('style', 'float: right; cursor: pointer;')
+    
+    a.addEventListener('click', (event) => {
+        todos.removeTask(id).then((removed_id) => {
+            const li_to_remove = document.querySelector(`[data-key='${removed_id}']`)
+            if (li_to_remove) {
+                list.removeChild(li_to_remove)
+            }
+        }).catch((error) => {
+            alert(error)
+        })
+    })
+}
 // Загрузка всех задач
 const getTasks = () => {
   input.disabled = true

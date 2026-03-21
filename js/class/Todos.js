@@ -50,6 +50,26 @@ class Todos {
         })
     })
   }
+  #removeFromArray = (id) => {
+    this.#tasks = this.#tasks.filter(task => task.getId() !== id)
 }
+
+removeTask = (id) => {
+    return new Promise(async (resolve, reject) => {
+        fetch(this.#backend_url + '/delete/' + id, {
+            method: 'DELETE'
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            this.#removeFromArray(id)
+            resolve(json.id)
+        })
+        .catch((error) => {
+            reject(error)
+        })
+    })
+}
+}
+
 
 export { Todos }
