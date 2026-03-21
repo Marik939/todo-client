@@ -5,18 +5,28 @@ import { Todos } from "./class/Todos.js"
 const todos = new Todos(BACKEND_ROOT_URL)
 
 const list = document.querySelector('ul')
+list.classList.add('list-group')  
 const input = document.querySelector('input')
 
-// Рендер одной задачи
 const renderTask = (task) => {
     const li = document.createElement('li')
-    li.setAttribute('class', 'list-group-item')
-    li.setAttribute('data-key', task.getId().toString())   // важно для удаления
+    li.className = 'list-group-item d-flex justify-content-between align-items-center'
+    li.setAttribute('data-key', task.getId())
 
-    renderSpan(li, task.getText())
-    renderLink(li, task.getId())
+    li.innerHTML = `
+        <span>${task.getText()}</span>
+        <a href="#" class="text-danger"><i class="bi bi-trash fs-5"></i></a>
+    `
 
     list.append(li)
+
+    // обработка удаления
+    li.querySelector('a').addEventListener('click', (e) => {
+        e.preventDefault()
+        todos.removeTask(task.getId())
+            .then(() => li.remove())
+            .catch(err => alert('deletion error: ' + err.message))
+    })
 }
 
 const renderSpan = (li, text) => {
