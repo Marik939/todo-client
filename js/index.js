@@ -3,7 +3,13 @@ const BACKEND_ROOT_URL = 'https://todo-backend-9w2v.onrender.com'
 import { Todos } from "./class/Todos.js"
 
 const todos = new Todos(BACKEND_ROOT_URL)
+const cors = require('cors')
 
+app.use(cors({
+    origin: '*',                    // разрешает всё (для учебного проекта нормально)
+    methods: ['GET', 'POST', 'DELETE'],
+    credentials: true
+}))
 const list = document.querySelector('ul')
 list.classList.add('list-group')  
 const input = document.querySelector('input')
