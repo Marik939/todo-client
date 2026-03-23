@@ -27,7 +27,7 @@ const renderTask = (task) => {
     })
 }
 
-//uploading task
+// загрузка задач
 const getTasks = () => {
     input.disabled = true
     todos.getTasks()
@@ -40,19 +40,21 @@ const getTasks = () => {
             alert("Не удалось загрузить задачи")
         })
 }
+
+// добавление новой задачи
 input.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
         event.preventDefault()
         const taskText = input.value.trim()
         if (taskText !== '') {
-            todos.addTask(taskText).then((newTask) => {
-                    renderTask(newTask)
-                    input.value = ''
-                    input.focus()
-                })
+            todos.addTask(taskText).then((task) => {   // ← newTask → task
+                renderTask(task)
+                input.value = ''
+                input.focus()
+            })
+            .catch(err => alert('Ошибка добавления: ' + err.message))
         }
     }
 })
 
 getTasks()
-newTask.getTask()
