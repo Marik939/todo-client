@@ -6,7 +6,7 @@ const todos = new Todos(BACKEND_ROOT_URL)
 const list = document.querySelector('ul')
 const input = document.querySelector('input')
 
-// === РЕНДЕР ЗАДАЧИ ===
+// render
 const renderTask = (task) => {
     const li = document.createElement('li')
     li.className = 'list-group-item d-flex justify-content-between align-items-center'
@@ -27,7 +27,7 @@ const renderTask = (task) => {
     })
 }
 
-// === ЗАГРУЗКА ЗАДАЧ ===
+//uploading task
 const getTasks = () => {
     input.disabled = true
     todos.getTasks()
@@ -40,22 +40,19 @@ const getTasks = () => {
             alert("Не удалось загрузить задачи")
         })
 }
-
-// === ДОБАВЛЕНИЕ НОВОЙ ЗАДАЧИ ===
 input.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
         event.preventDefault()
         const taskText = input.value.trim()
         if (taskText !== '') {
-            todos.addTask(taskText)
-                .then((newTask) => {
+            todos.addTask(taskText).then((newTask) => {
                     renderTask(newTask)
                     input.value = ''
+                    input.focus()
                 })
-                .catch((error) => alert(error))
         }
     }
 })
 
-// Запуск
 getTasks()
+newTask.getTask()

@@ -63,8 +63,7 @@ removeTask = (id) => {
         .then((json) => {
             this.#removeFromArray(id)
             resolve(json.id)
-        })
-        .catch((error) => {
+        }, (error) => {
             reject(error)
         })
     })
